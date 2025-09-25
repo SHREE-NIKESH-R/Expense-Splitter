@@ -14,6 +14,8 @@ A React application to help split expenses among friends.
 
 ## Getting Started
 
+create a top-level folder named `React` and open it in VS Code (File → Open Folder → select the `React` folder). Then follow the steps below to clone and run the project.
+
 1. Clone the repository
 ```bash
 git clone https://github.com/SHREE-NIKESH-R/Expense-Splitter.git
