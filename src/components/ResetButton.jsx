@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function ResetButton({ onReset }) {
+function ResetButton({ onReset, className = '' }) {
   const [showConfirm, setShowConfirm] = useState(false)
 
   const handleReset = () => {
@@ -10,42 +10,48 @@ function ResetButton({ onReset }) {
 
   if (showConfirm) {
     return (
-      <div className="card border-danger">
-        <div className="card-body text-center">
-          <h6 className="card-title text-danger">Confirm Reset</h6>
-          <p className="card-text">This will delete all expenses and reset friends list. This cannot be undone.</p>
-          <div className="d-flex gap-2 justify-content-center">
+      <div className="position-relative">
+        <div className="position-absolute end-0 top-100 mt-2 p-2 bg-white border rounded shadow-sm" style={{ zIndex: 1000, minWidth: '200px' }}>
+          <p className="text-danger mb-2 small">Are you sure? This cannot be undone.</p>
+          <div className="d-flex gap-2 justify-content-end">
             <button 
-              className="btn btn-danger"
+              className="btn btn-danger btn-sm"
               onClick={handleReset}
             >
-              Yes, Reset All
+              Reset
             </button>
             <button 
-              className="btn btn-secondary"
+              className="btn btn-secondary btn-sm"
               onClick={() => setShowConfirm(false)}
             >
               Cancel
             </button>
           </div>
         </div>
+        <button 
+          className="btn btn-outline-danger btn-sm active"
+          onClick={() => setShowConfirm(false)}
+          style={{
+            borderRadius: '20px',
+          }}
+        >
+          🔄 Reset
+        </button>
       </div>
     )
   }
 
   return (
-    <div className="card">
-      <div className="card-body text-center">
-        <h6 className="card-title">🔄 Reset Data</h6>
-        <p className="card-text small text-muted">Clear all expenses and reset</p>
-        <button 
-          className="btn btn-outline-danger btn-sm"
-          onClick={() => setShowConfirm(true)}
-        >
-          Reset All Data
-        </button>
-      </div>
-    </div>
+    <button 
+      className={`btn btn-danger btn-sm ${className}`}
+      onClick={() => setShowConfirm(true)}
+      title="Reset all data"
+      style={{
+        borderRadius: '20px',
+      }}
+    >
+      🔄 Reset All
+    </button>
   )
 }
 

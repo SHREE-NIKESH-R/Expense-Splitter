@@ -8,16 +8,28 @@ export function calculateBalances(expenses, friends) {
     })
 
     expenses.forEach(expense => {
-        const { amount, paidBy, participants } = expense
-        const perPersonAmount = amount / participants.length
+        const { amount, paidBy, participants, splitType } = expense
 
         // Person who paid gets credited
         balances[paidBy] += amount
 
-        // All participants get debited their share
-        participants.forEach(participant => {
-            balances[participant] -= perPersonAmount
-        })
+        // Debit participants based on split type
+        if (splitType && splitType.splits) {
+            // Use custom splits (percentage or custom amounts)
+            Object.entries(splitType.splits).forEach(([participant, splitAmount]) => {
+                if (Object.prototype.hasOwnProperty.call(balances, participant)) {
+                    balances[participant] -= splitAmount
+                }
+            })
+        } else {
+            // Default to equal split for backward compatibility
+            const perPersonAmount = amount / participants.length
+            participants.forEach(participant => {
+                if (Object.prototype.hasOwnProperty.call(balances, participant)) {
+                    balances[participant] -= perPersonAmount
+                }
+            })
+        }
     })
 
     return balances

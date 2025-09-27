@@ -33,20 +33,24 @@ function FriendsList({ friends, onAddFriend, onRemoveFriend }) {
         </form>
 
         <div className="friends-list">
-          {friends.map((friend, index) => (
-            <div key={index} className="d-flex justify-content-between align-items-center mb-2">
-              <span className="badge bg-light text-dark fs-6 px-3 py-2">
-                {friend}
-              </span>
-              <button
-                className="btn btn-outline-danger btn-sm"
-                onClick={() => onRemoveFriend(friend)}
-                disabled={friends.length <= 2}
-              >
-                ×
-              </button>
-            </div>
-          ))}
+          <div className="row g-2">
+            {friends.map((friend, index) => (
+              <div key={index} className="col-6">
+                <div className="d-flex justify-content-between align-items-center p-2 bg-white rounded">
+                  <span className="badge bg-light text-dark fs-6 px-3 py-2">
+                    {friend}
+                  </span>
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={() => onRemoveFriend(friend)}
+                    disabled={friends.length <= 2}
+                  >
+                    🗑️
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         
         {friends.length <= 2 && (
