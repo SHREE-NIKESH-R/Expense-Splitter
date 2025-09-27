@@ -74,8 +74,8 @@ export function calculateSettlements(balances) {
         creditor.amount -= settlementAmount
         debtor.amount -= settlementAmount
 
-        if (creditor.amount < 0.01) i++
-            if (debtor.amount < 0.01) j++
+        if (creditor.amount < 0.01) i++;
+        if (debtor.amount < 0.01) j++;
     }
 
     return settlements

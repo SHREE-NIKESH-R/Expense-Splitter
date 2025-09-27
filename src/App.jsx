@@ -3,7 +3,6 @@ import FriendsList from './components/FriendsList'
 import ExpenseForm from './components/ExpenseForm'
 import ExpenseList from './components/ExpenseList'
 import BalanceSummary from './components/BalanceSummary'
-import ResetButton from './components/ResetButton'
 import { calculateBalances, calculateSettlements } from './utils/calculations'
 
 function App() {

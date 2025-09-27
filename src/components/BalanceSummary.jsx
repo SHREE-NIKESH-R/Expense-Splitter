@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import ResetButton from './ResetButton'
+import { exportToCSV, exportToPDF } from '../utils/exportUtils'
 
 function BalanceSummary({ balances, settlements, onReset, expenses = [] }) {
   const [showCategoryBreakdown, setShowCategoryBreakdown] = useState(false)
+  const [exportError, setExportError] = useState(null)
   
   const hasBalances = Object.keys(balances).length > 0
   const hasSettlements = settlements.length > 0
@@ -31,6 +33,47 @@ function BalanceSummary({ balances, settlements, onReset, expenses = [] }) {
         <div className="d-flex justify-content-between align-items-center">
           <h5 className="card-title mb-0">💳 Balance Summary</h5>
           <div className="d-flex gap-2">
+            {/* Export Buttons */}
+            {expenses.length > 0 && (
+              <>
+                <button 
+                  className="btn btn-outline-success btn-sm"
+                  onClick={() => {
+                    try {
+                      exportToCSV(expenses)
+                      setExportError(null)
+                    } catch (error) {
+                      console.error('Error exporting CSV:', error)
+                      setExportError('Failed to export CSV. Please try again.')
+                    }
+                  }}
+                  title="Download CSV report"
+                >
+                  📊 CSV
+                </button>
+                <button 
+                  className="btn btn-outline-danger btn-sm"
+                  onClick={async () => {
+                    try {
+                      await exportToPDF(expenses, Object.keys(balances), balances, settlements)
+                      setExportError(null)
+                    } catch (error) {
+                      console.error('Error exporting PDF:', error)
+                      setExportError(error.message || 'Failed to export PDF. Please try again.')
+                    }
+                  }}
+                  title="Download PDF report"
+                >
+                  📄 PDF
+                </button>
+              </>
+            )}
+            {exportError && (
+              <div className="alert alert-danger py-1 px-2 mb-0 ms-2">
+                <small>{exportError}</small>
+              </div>
+            )}
+            {/* Category Toggle Button */}
             {Object.keys(categoryTotals).length > 0 && (
               <button 
                 className="btn btn-outline-primary btn-sm"
